@@ -1,0 +1,27 @@
+{
+    "terminal.integrated.shell.windows": "C:\\WINDOWS\\sysnative\\bash.exe",
+    "window.menuBarVisibility": "toggle",
+    "editor.fontLigatures": true,
+    "editor.fontFamily": "Fira Code",
+    "workbench.iconTheme": "material-icon-theme",
+    "material-icon-theme.folders.color": "#42a5f5",
+    "material-icon-theme.hidesExplorerArrows": false,
+    "workbench.colorTheme": "Darktooth",
+    "editor.formatOnSave": true,
+    "gitlens.advanced.messages": {
+        "suppressShowKeyBindingsNotice": true
+    },
+    "gitlens.defaultDateFormat": "MMM D, YYYY h:mm A",
+    "gitlens.gitExplorer.location": "scm",
+    "gitlens.historyExplorer.location": "scm",
+    "gitlens.resultsExplorer.location": "scm",
+    "gitlens.heatmap.toggleMode": "window",
+    "gitlens.recentChanges.toggleMode": "window",
+    "gitlens.statusBar.enabled": false,
+    "editor.fontSize": 16,
+    "files.autoSave": "onFocusChange",
+    "editor.cursorStyle": "line-thin",
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.insertSpaces": false,
+    "editor.cursorBlinking": "expand"
+}
