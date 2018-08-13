@@ -1,0 +1,21 @@
+# This is Git's per-user configuration file.
+[user]
+	name = Max McKinley
+	email = max@MaxBook-Pro.local
+[url "git@git.axoni.com:"]
+	insteadOf = https://git.axoni.com/
+[merge]
+    ff = only
+
+[alias]
+	co = checkout
+	cm = commit -m
+	am = commit --amend	# This seems broken
+	b = branch
+	l = log
+	st = status
+	rb = rebase -i
+	skip = rebase --skip
+	cont = rebase --continue
+	abort = rebase --abort
+	sq = reset --soft
