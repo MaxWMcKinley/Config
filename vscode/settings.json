@@ -35,5 +35,8 @@
   "breadcrumbs.enabled": false,
   "workbench.activityBar.visible": true,
   "zenMode.centerLayout": false,
-  "window.menuBarVisibility": "toggle"
+  "window.menuBarVisibility": "toggle",
+  "files.associations": {
+    "zshrc": "shellscript"
+  }
 }
