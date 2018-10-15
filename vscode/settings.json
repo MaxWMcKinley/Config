@@ -38,5 +38,7 @@
   "window.menuBarVisibility": "toggle",
   "files.associations": {
     "zshrc": "shellscript"
-  }
+  },
+  "bracketPairColorizer.showBracketsInGutter": true,
+  "bracketPairColorizer.showHorizontalScopeLine": false
 }
