@@ -1,0 +1,39 @@
+{
+  "editor.fontLigatures": true,
+  "editor.fontFamily": "Fira Code",
+  "workbench.iconTheme": "material-icon-theme",
+  "material-icon-theme.folders.color": "#42a5f5",
+  "material-icon-theme.hidesExplorerArrows": false,
+  "workbench.colorTheme": "One Dark Pro Vivid",
+  "editor.formatOnSave": true,
+  "gitlens.advanced.messages": {
+    "suppressShowKeyBindingsNotice": true
+  },
+  "gitlens.defaultDateFormat": "MMM D, YYYY h:mm A",
+  "gitlens.gitExplorer.location": "scm",
+  "gitlens.historyExplorer.location": "scm",
+  "gitlens.resultsExplorer.location": "scm",
+  "gitlens.heatmap.toggleMode": "window",
+  "gitlens.recentChanges.toggleMode": "window",
+  "gitlens.statusBar.enabled": false,
+  "editor.fontSize": 16,
+  "files.autoSave": "onFocusChange",
+  "editor.cursorStyle": "line-thin",
+  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.cursorBlinking": "expand",
+  "explorer.openEditors.visible": 0,
+  "solidity.enabledAsYouTypeCompilationErrorCheck": false,
+  "solidity.linter": "solhint",
+  "solidity.validationDelay": 1000,
+  "selectinsidesidebar.defaultStyle": {
+    "backgroundColor": "#dd3e3e"
+  },
+  "editor.minimap.enabled": false,
+  "window.zoomLevel": 0,
+  "selectline.displayFormat": "%d Lines",
+  "selectline.alignment": "right",
+  "breadcrumbs.enabled": false,
+  "workbench.activityBar.visible": true,
+  "zenMode.centerLayout": false,
+  "window.menuBarVisibility": "toggle"
+}

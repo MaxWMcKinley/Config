@@ -1,9 +1,0 @@
-Beautify
-Color Highlight
-Darktooth Theme
-gitignore
-GitLens
-highlight-matching-tag
-Material Icon Theme
-select highlight in minimap
-VS Color Picker
