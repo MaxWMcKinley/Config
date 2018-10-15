@@ -9,24 +9,33 @@ antigen use oh-my-zsh
 antigen bundle docker
 antigen bundle pj
 antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zdharma/fast-syntax-highlighting
+antigen bundle djui/alias-tips
+antigen bundle marzocchi/zsh-notify
+antigen bundle command-not-found
+
+antigen theme https://github.com/denysdovhan/spaceship-prompt spaceship
 
 antigen apply
 
-fpath+=('/usr/local/lib/node_modules/pure-prompt/functions')
-autoload -U promptinit; promptinit
-PURE_GIT_DELAY_DIRTY_CHECK=600
-prompt pure
 
 # ----------------------------------------------------------------------
 # exports
 # ----------------------------------------------------------------------
 
-export GOPATH=$HOME/home/repos/go-workspace
-export PATH=$PATH:$GOPATH/bin
+export SPACESHIP_CHAR_COLOR_SUCCESS=magenta;
+export SPACESHIP_CHAR_COLOR_SECONDARY=blue;
+export SPACESHIP_USER_PREFIX=as;
+export SPACESHIP_GIT_BRANCH_COLOR=blue;
+export SPACESHIP_GIT_STATUS_PREFIX=' ';
+export SPACESHIP_GIT_STATUS_SUFFIX='';
+export SPACESHIP_PACKAGE_SYMBOL='';
 
-export PROJECT_PATHS=(~/home/repos/ ~/.axops/localdata/)
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
+export REPOS=$HOME/home/repos
+export SCRIPTS=$HOME/home/scripts
+
+export PROJECT_PATHS=($REPOS)
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=blue"
 
 
 # ----------------------------------------------------------------------
@@ -35,11 +44,17 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
 
 alias ..='cd ..'
 alias apt-rm='sudo apt-get --purge autoremove'
-
-alias g='git'
-alias d='sudo docker'
-
 alias ls='colorls --sort-dirs'
 alias lsa='colorls --long --sort-dirs --almost-all'
+alias vim='nvim'
 
-alias dc='docker-compose -f /Users/max/home/docker-compose.yml'
+alias g='git'
+alias d='docker'
+
+export NVM_DIR="/home/max/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# ----------------------------------------------------------------------
+# Import local config
+# ----------------------------------------------------------------------
+source $HOME/.local.zshrc
