@@ -18,6 +18,12 @@ antigen theme https://github.com/denysdovhan/spaceship-prompt spaceship
 
 antigen apply
 
+autoload zmv
+
+autoload -U tetris
+zle -N tetris
+bindkey tetris tetris
+
 
 # ----------------------------------------------------------------------
 # exports
@@ -47,12 +53,19 @@ alias apt-rm='sudo apt-get --purge autoremove'
 alias ls='colorls --sort-dirs'
 alias lsa='colorls --long --sort-dirs --almost-all'
 alias vim='nvim'
-
+alias zcp='zmv -C'
+alias zln='zmv -L'
 alias g='git'
 alias d='docker'
+alias s='sudo systemctl'
 
 export NVM_DIR="/home/max/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# startup virtualenv-burrito
+if [ -f $HOME/.venvburrito/startup.sh ]; then
+    . $HOME/.venvburrito/startup.sh
+fi
 
 # ----------------------------------------------------------------------
 # Import local config
