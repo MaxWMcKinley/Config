@@ -29,7 +29,7 @@
     "backgroundColor": "#dd3e3e"
   },
   "editor.minimap.enabled": false,
-  "window.zoomLevel": 0,
+  "window.zoomLevel": 4,
   "selectline.displayFormat": "%d Lines",
   "selectline.alignment": "right",
   "breadcrumbs.enabled": false,
@@ -40,5 +40,19 @@
     "zshrc": "shellscript"
   },
   "bracketPairColorizer.showBracketsInGutter": true,
-  "bracketPairColorizer.showHorizontalScopeLine": false
+  "bracketPairColorizer.showHorizontalScopeLine": false,
+  "todohighlight.include": [
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.html",
+    "**/*.php",
+    "**/*.css",
+    "**/*.scss",
+    "**/*.sol",
+    "**/*.py"
+  ],
+  "zenMode.hideStatusBar": false,
+  "terminal.integrated.rendererType": "dom",
 }
