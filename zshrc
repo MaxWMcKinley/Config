@@ -57,7 +57,9 @@ alias zcp='zmv -C'
 alias zln='zmv -L'
 alias g='git'
 alias d='docker'
+alias dps='docker ps --format "{{.ID}} {{.Names}} {{.Status}}'
 alias s='sudo systemctl'
+alias info='neofetch'
 
 export NVM_DIR="/home/max/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -70,4 +72,4 @@ fi
 # ----------------------------------------------------------------------
 # Import local config
 # ----------------------------------------------------------------------
-source $HOME/.local.zshrc
+source $HOME/.localrc
