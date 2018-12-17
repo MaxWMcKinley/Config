@@ -18,6 +18,9 @@ bindsym Mod1+Return exec urxvt
 # kill focused window
 bindsym Mod1+Shift+q kill
 
+# lock screen
+bindsym Mod1+Shift+x exec "i3lock-fancy"
+
 # change focus
 bindsym Mod1+$left focus left
 bindsym Mod1+$down focus down
