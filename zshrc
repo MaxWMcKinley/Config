@@ -60,6 +60,7 @@ alias d='docker'
 alias dps='docker ps --format "{{.ID}} {{.Names}} {{.Status}}'
 alias s='sudo systemctl'
 alias info='neofetch'
+alias wifi='nmtui'
 
 export NVM_DIR="/home/max/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
