@@ -157,7 +157,7 @@ bar {
 }
 
 # Gaps config
-for_window [class="^.*"] border pixel 5
+for_window [class="^.*"] border pixel 2
 gaps inner 15
 gaps outer 10
 
@@ -170,6 +170,9 @@ exec --no-startup-id code
 
 # Rofi
 bindsym Mod1+d exec rofi -show run -font "ubuntu mono 18" -width 30 -lines 5
+
+# Take Screenshot
+bindsym Mod1+p exec gnome-screenshot -i
 
 # Personalization
 focus_follows_mouse no
