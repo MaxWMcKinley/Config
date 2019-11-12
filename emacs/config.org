@@ -1,0 +1,271 @@
+#+STARTUP: overview
+
+* Packages
+
+** Use Package
+
+#+BEGIN_SRC emacs-lisp
+
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
+
+#+END_SRC
+
+** Ivy and Friends
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package ivy
+  :delight
+  :init
+  (progn
+    (setq enable-recursive-minibuffers t)
+    (setq ivy-use=virtual-buffers t))
+  :config
+  (ivy-mode 1))
+
+(use-package swiper
+  :delight
+  :bind ("C-s" . swiper))
+
+#+END_SRC
+
+** Magit
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package magit
+  :bind ("C-c g" . magit-status))
+
+#+END_SRC
+
+** Projectile
+
+#+BEGIN_SRC emacs-lisp
+
+  (use-package projectile
+    :delight
+    :init
+    (progn
+      (setq projectile-completion-system 'ivy)
+      (setq projectile-mode-line-prefix nil)
+      (setq projectile-switch-project-action #'projectile-dired)
+      (setq projectile-project-search-path '("~/home/repos/" "~/home/scripts/" "~/home/org")))
+    :config
+    (progn
+      (projectile-register-project-type 'solidity '("truffle-config.js")
+                                        :compile "truffle compile"
+                                        :test "ferd runDevTests -ct Axoni AB"
+                                        :run "ferd setupEnv -ct Axoni -v"
+                                        :src-dir "src/"
+                                        :test-dir "src/test/"
+                                        :test-suffix "Test")
+      (projectile-mode +1))
+    :bind ("M-p" . projectile-command-map))
+
+#+END_SRC
+
+** Company
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package company
+  :hook (after-init-hook . global-company-mode))
+
+#+END_SRC
+
+** Flycheck
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package flycheck
+  :hook (after-init-hook . global-flycheck-mode))
+
+#+END_SRC
+
+** Powerline
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package powerline
+  :init
+  (setq powerine-default-seperator 'wave)
+  :config
+  (powerline-center-theme))
+
+#+END_SRC
+
+** Avy
+
+#+BEGIN_SRC emacs-lisp
+(use-package avy
+  :bind (("M-s" . avy-goto-char)
+    ("M-g g" . avy-goto-line)))
+#+END_SRC
+
+** Ace Window
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package ace-window
+  :init
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+  :bind ("M-o" . ace-window))
+
+#+END_SRC
+
+** Multi Cursor
+
+#+BEGIN_SRC emacs-lisp
+
+  (use-package multiple-cursors
+    :bind (("C->" . mc/mark-next-like-this)
+           ("C-<" . mc/mark-previous-like-this)))
+
+#+END_SRC
+
+** Smooth Scrolling
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package smooth-scrolling
+  :config
+  (smooth-scrolling-mode 1))
+
+#+END_SRC
+
+** YASnippets
+
+#+BEGIN_SRC emacs-lisp
+
+  (use-package yasnippet
+    :config (yas-global-mode))
+
+#+END_SRC
+
+** Docker
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package docker
+  :bind ("C-c d" . docker))
+
+#+END_SRC
+
+** Undo Tree
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package undo-tree
+  :config
+  (global-undo-tree-mode)
+  :bind ("M-/" . undo-tree-visualize))
+
+#+END_SRC
+
+** Delight
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package delight)
+
+#+END_SRC
+
+** String inflection
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package string-inflection
+  :bind ("C-c i" . string-inflection-cycle))
+
+#+END_SRC
+
+** Witch key
+#+BEGIN_SRC emacs-lisp
+
+  (use-package which-key
+    :delight
+    :config (which-key-mode))
+
+#+END_SRC
+
+* ~ Aesthetic ~ 
+#+BEGIN_SRC emacs-lisp
+
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(column-number-mode)
+(show-paren-mode)
+(global-display-line-numbers-mode)
+
+(setq frame-title-format "Emax")
+(setq inhibit-startup-message t)
+(set-default 'cursor-type 'bar)
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(setq spacemacs-theme-comment-italic t)
+(setq spacemacs-theme-keyword-italic t)
+(setq spacemacs-theme-comment-bg nil)
+(load-theme `spacemacs-dark t)
+
+#+END_SRC
+
+* Languages
+** Solidity
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package solidity-mode
+  :init
+  (progn
+    (setq solidity-comment-style 'slash)
+    (setq solidity-solc-path "/usr/bin/solc"))
+  :hook (solidity-mode-hook . 
+    (lambda ()
+    (set (make-local-variable 'company-backends)
+		(append '((company-solidity company-capf company-dabbrev-code))
+			company-backends)))))
+
+(use-package solidity-flycheck
+  :init
+  (setq solidity-flycheck-solc-checker-active t))
+
+(use-package company-solidity)
+
+#+END_SRC
+
+** YAML
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package flycheck-yamllint
+  :hook (flycheck-mode-hook . flycheck-yamllint-setup)
+  :after (flycheck))
+
+#+END_SRC
+
+* Customization
+
+#+BEGIN_SRC emacs-lisp
+
+(electric-pair-mode)
+(setq-default indent-tabs-mode nil)
+(delete-selection-mode t)
+
+#+END_SRC
+
+* Org Mode
+
+#+BEGIN_SRC emacs-lisp
+
+  (setq org-agenda-files (list "~/home/org/axoni/sprints.org"))
+  (define-key global-map (kbd "C-c l") 'org-store-link)
+  (define-key global-map (kbd "C-c a") 'org-agenda)
+
+  (use-package org-bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+#+END_SRC
+
