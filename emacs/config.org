@@ -1,7 +1,6 @@
 #+STARTUP: overview
 
 * Packages
-
 ** Use Package
 
 #+BEGIN_SRC emacs-lisp
@@ -31,11 +30,14 @@
 #+END_SRC
 
 ** Magit
+*** TODO Get all the top level items to be unfolded always
 
 #+BEGIN_SRC emacs-lisp
 
 (use-package magit
-  :bind ("C-c g" . magit-status))
+  :bind ("C-c g" . magit-status)
+  :config
+  (setf (alist-get 'unpushed magit-section-initial-visibility-alist) 'show))
 
 #+END_SRC
 
@@ -50,7 +52,7 @@
       (setq projectile-completion-system 'ivy)
       (setq projectile-mode-line-prefix nil)
       (setq projectile-switch-project-action #'projectile-dired)
-      (setq projectile-project-search-path '("~/home/repos/" "~/home/scripts/" "~/home/org")))
+      (setq projectile-project-search-path '("~/proj/" "~/scripts/" "~/org")))
     :config
     (progn
       (projectile-register-project-type 'solidity '("truffle-config.js")
@@ -62,6 +64,46 @@
                                         :test-suffix "Test")
       (projectile-mode +1))
     :bind ("M-p" . projectile-command-map))
+
+#+END_SRC
+
+** Treemacs
+
+#+BEGIN_SRC emacs-lisp
+
+  (use-package treemacs
+    :bind (("C-x t" . treemacs)
+      ("C-t" . treemacs-select-window)))
+
+  (use-package treemacs-projectile
+    :after treemacs projectile)
+
+  (use-package treemacs-magit
+     :after treemacs magit)
+
+#+END_SRC
+
+** Perspective
+*** TODO Figure out how to set magit and sql on startup
+*** TODO Delete org and code/main persps when possible
+*** TODO Switch to remote package once it has state functions
+*** TODO Fix window keymap in magit
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package perspective
+  :load-path "~/.emacs.d/lisp/perspective-el"
+  :config (persp-mode))
+
+(persp-state-load "~/.emacs.d/persp-state")
+
+#+END_SRC
+
+** Hydra
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package hydra)
 
 #+END_SRC
 
@@ -95,11 +137,18 @@
 
 #+END_SRC
 
+** Ripgrep
+
+#+BEGIN_SRC emacs-lisp
+(use-package deadgrep
+  :bind ("M-s" . deadgrep))
+#+END_SRC
+
 ** Avy
 
 #+BEGIN_SRC emacs-lisp
 (use-package avy
-  :bind (("M-s" . avy-goto-char)
+  :bind (("M-j" . avy-goto-char-2)
     ("M-g g" . avy-goto-line)))
 #+END_SRC
 
@@ -121,16 +170,6 @@
   (use-package multiple-cursors
     :bind (("C->" . mc/mark-next-like-this)
            ("C-<" . mc/mark-previous-like-this)))
-
-#+END_SRC
-
-** Smooth Scrolling
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package smooth-scrolling
-  :config
-  (smooth-scrolling-mode 1))
 
 #+END_SRC
 
@@ -189,11 +228,22 @@
 
 #+END_SRC
 
+** Move Border
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package move-border
+  :load-path "~/.emacs.d/lisp/move-border")
+
+#+END_SRC
+
 * ~ Aesthetic ~ 
 #+BEGIN_SRC emacs-lisp
 
+(toggle-frame-fullscreen)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
+(toggle-scroll-bar -1)
 (column-number-mode)
 (show-paren-mode)
 (global-display-line-numbers-mode)
@@ -211,26 +261,57 @@
 #+END_SRC
 
 * Languages
+** SQL
+
+#+BEGIN_SRC emacs-lisp
+
+(setq sql-user "axcore")
+(setq sql-password "axcore")
+(setq sql-database "axcore")
+(setq sql-server "localhost")
+(setq sql-port 54321)
+
+ (add-hook 'sql-login-hook 'my-sql-login-hook)
+ (defun my-sql-login-hook ()
+   "Custom SQL log-in behaviours. See `sql-login-hook'."
+   ;; n.b. If you are looking for a response and need to parse the
+   ;; response, use `sql-redirect-value' instead of `comint-send-string'.
+   (when (eq sql-product 'postgres)
+     (let ((proc (get-buffer-process (current-buffer))))
+       ;; Output each query before executing it. (n.b. this also avoids
+       ;; the psql prompt breaking the alignment of query results.)
+       (comint-send-string proc "\\set ECHO queries\n"))))
+
+#+END_SRC
+
+** Markdown
+#+BEGIN_SRC emacs-lisp
+
+  (use-package markdown-mode
+    :init (setq markdown-command "pandoc --standalone --from markdown --to html"))
+
+#+END_SRC
+
 ** Solidity
 
 #+BEGIN_SRC emacs-lisp
 
-(use-package solidity-mode
-  :init
-  (progn
-    (setq solidity-comment-style 'slash)
-    (setq solidity-solc-path "/usr/bin/solc"))
-  :hook (solidity-mode-hook . 
-    (lambda ()
-    (set (make-local-variable 'company-backends)
-		(append '((company-solidity company-capf company-dabbrev-code))
-			company-backends)))))
+  (use-package solidity-mode
+    :init
+    (progn
+      (setq solidity-comment-style 'slash)
+      (setq solidity-solc-path "/usr/bin/solc")))
+  ;;   :hook (solidity-mode-hook . 
+  ;;     (lambda ()
+  ;;     (set (make-local-variable 'company-backends)
+  ;; 		(append '((company-solidity company-capf company-dabbrev-code))
+  ;; 			company-backends)))))
 
-(use-package solidity-flycheck
-  :init
-  (setq solidity-flycheck-solc-checker-active t))
+  (use-package solidity-flycheck
+    :init
+    (setq solidity-flycheck-solc-checker-active t))
 
-(use-package company-solidity)
+  (use-package company-solidity)
 
 #+END_SRC
 
@@ -244,13 +325,145 @@
 
 #+END_SRC
 
+** Scala
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package scala-mode
+  :interpreter
+  ("scala" . scala-mode))
+
+#+END_SRC
+
+** Dockerfile
+
+#+BEGIN_SRC emacs-lisp
+(use-package dockerfile-mode
+  :mode ("Dockerfile\\'" . dockerfile-mode))
+#+END_SRC
+
 * Customization
 
 #+BEGIN_SRC emacs-lisp
 
 (electric-pair-mode)
+
 (setq-default indent-tabs-mode nil)
+(setq tab-width 4)
+(setq indent-line-function 'insert-tab)
+(setq tab-stop-list '(4 8 12))
+(setq c-default-style "stroustrup") 
+(setq c-basic-offset 4) 
+
 (delete-selection-mode t)
+
+(setq backup-directory-alist '(("" . "~/.emacs.d/backups")))
+(setq auto-save-file-name-transforms '(("\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'" "/tmp/\\2" t)))
+
+(setq initial-scratch-message nil)
+
+(defun toggle-frame-split ()
+  "If the frame is split vertically, split it horizontally or vice versa.
+Assumes that the frame is only split into two."
+  (interactive)
+  (unless (= (length (window-list)) 2) (error "Can only toggle a frame split in two"))
+  (let ((split-vertically-p (window-combined-p)))
+    (delete-window) ; closes current window
+    (if split-vertically-p
+        (split-window-horizontally)
+      (split-window-vertically)) ; gives us a split with the other window twice
+    (switch-to-buffer nil))) ; restore the original window in this part of the frame
+
+#+END_SRC
+
+** Keybindings / Hydra
+*** TODO Macros
+*** TODO Projectile
+*** TODO Treemacs
+*** TODO Ediff
+
+ctrl:
+q   w: window   e   r   t   y   u   i   o   p: movement
+a   s   d   f: movement   g   h   j   k   l   ;
+z: undo   x   c: copy   v: paste   b: movement   n: movement   m   ,   .   /
+
+alt: 
+q   w   e   r   t   y   u   i   o   p: movement
+a   s: search   d   f: movement   g   h   j   k   l   ;
+z: undo   x   c: copy   v: paste   b: movement   n: movement   m   ,   .   /
+scratch buffer
+
+*** Set up pretty hydra
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package pretty-hydra)
+
+#+END_SRC
+
+*** Set up hydra posframe
+**** TODO Get rid of border and a 3d shadow like effect instead [[https://github.com/Ladicle/hydra-posframe][Example]]
+**** TODO Add some padding on the inside
+**** TODO Make the titles bold [[https://github.com/jerrypnz/major-mode-hydra.el][Example]]
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package posframe)
+(use-package hydra-posframe
+  :load-path "~/.emacs.d/lisp/hydra-posframe"
+  :hook (after-init . hydra-posframe-enable))
+
+#+END_SRC
+
+*** Window hydra
+**** TODO Figure out why the last line of Resize is being ignored
+
+#+BEGIN_SRC emacs-lisp
+
+(pretty-hydra-define hydra-window (:title "Window Shortcuts" :separator "━") 
+  ("Movement"
+    (("w" ace-window "Switch window" :color blue)
+     ("m" ace-swap-window "Move window" :color blue)
+     ("s" follow-mode "Stitch" :color blue))
+  "Layout"
+    (("d" persp-switch-quick "Perspective" :color blue)
+     ("n" persp-switch "New layout" :color blue)
+     ("|" split-window-right "Vertical" :color blue)
+     ("_" split-window-below "Horizontal" :color blue)
+     ("t" toggle-frame-split "Toggle split" :color blue))
+  "Close"
+    (("c" delete-window "Close" :color blue)
+     ("o" ace-delete-window "Close Other" :color blue))
+  "Resize"
+    (("f" ace-delete-other-windows "Fullscreen" :color blue)
+     ("b" balance-windows "Balance" :color blue)
+     ("j" move-border-left "←")
+     ("l" move-border-right "→")
+     ("i" move-border-up "↑")
+     ("k" move-border-down "↓")
+     ("!" nil "ignore"))))
+
+(define-key global-map (kbd "C-w") 'hydra-window/body)
+
+
+#+END_SRC
+
+*** File switching hydra
+**** TODO Create named eyebrowse layouts
+
+#+BEGIN_SRC emacs-lisp
+
+(pretty-hydra-define hydra-file (:title "File Shortcuts" :separator "━") 
+  ("File"
+    (("f" projectile-find-file "Project" :color blue)
+     ("p" find-file "Path" :color blue))
+  "Buffer"
+    (("b" ivy-switch-buffer "Switch" :color blue))
+  "Layout"
+    (("c" eyebrowse-mode "Code" :color blue))))
+
+(define-key global-map (kbd "C-j") 'hydra-file/body)
+
 
 #+END_SRC
 
@@ -258,14 +471,37 @@
 
 #+BEGIN_SRC emacs-lisp
 
-  (setq org-agenda-files (list "~/home/org/axoni/sprints.org"))
+  (setq org-agenda-files (list "~/org/inbox.org"))
   (define-key global-map (kbd "C-c l") 'org-store-link)
   (define-key global-map (kbd "C-c a") 'org-agenda)
 
+  (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+  
+  (use-package org
+    :pin org)
+
   (use-package org-bullets
-    :ensure t
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+  (use-package htmlize)
+
+  (org-babel-do-load-languages 'org-babel-load-languages
+     '(
+       (emacs-lisp . t)
+       (shell . t)
+      ))
+
+  (use-package org-edna)
+  (use-package org-super-agenda)
+
+#+END_SRC
+
+* Magit
+
+#+BEGIN_SRC emacs-lisp
+
+(setq smerge-command-prefix (kbd "C-c m"))
 
 #+END_SRC
 
