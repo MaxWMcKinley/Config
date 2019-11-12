@@ -43,6 +43,8 @@ export SCRIPTS=$HOME/home/scripts
 export PROJECT_PATHS=($REPOS)
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=blue"
 
+export PATH=$PATH:$SCRIPTS
+
 
 # ----------------------------------------------------------------------
 # Aliases
@@ -61,14 +63,11 @@ alias dps='docker ps --format "table {{.Image}}\t{{.Names}}\t{{.Status}}"'
 alias s='sudo systemctl'
 alias info='neofetch'
 alias wifi='nmtui'
+alias config='code $REPOS/config/zshrc'
+alias localrc='code $HOME/.localrc'
 
 export NVM_DIR="/home/max/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-
-# startup virtualenv-burrito
-if [ -f $HOME/.venvburrito/startup.sh ]; then
-    . $HOME/.venvburrito/startup.sh
-fi
 
 # ----------------------------------------------------------------------
 # Import local config
