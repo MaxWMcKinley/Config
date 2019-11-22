@@ -38,7 +38,7 @@ function fish_prompt --description 'Write fish prompt'
 	 set_color cyan
 	 echo (prompt_pwd) (set_color magenta)(parse_git_branch)
       	 set_color blue
-      	 printf '\u226B '
+      	 printf '\uf0e7 '
 end	 
 
 
