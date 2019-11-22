@@ -1,0 +1,223 @@
+* Settings
+** Trackpad
+*** Sensitivity -> max
+** Dock
+*** Left side
+*** Magnify
+*** Auto hide
+*** Remove extra bs apps
+** Sticky Spaces
+** Customize Finder
+** Lock screen hot corner
+
+* Install Software from Internet
+** Postman
+** Slack
+** Spotify
+** 1password
+
+* Configuration
+
+** Set up directory structure
+
+#+BEGIN_SRC shell
+
+mkdir ~/proj
+mkdir ~/scripts
+mkdir ~/scratch
+mkdir ~/lib
+
+#+END_SRC
+
+** Pull dotfiles
+
+#+BEGIN_SRC shell
+
+git clone https://github.com/MaxWMcKinley/dotfiles.git ~/lib/dotfiles
+
+#+END_SRC
+
+* Homebrew
+
+#+BEGIN_SRC sh
+
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+#+END_SRC
+
+* iTerm2
+
+** Installation
+
+#+BEGIN_SRC sh
+
+brew cask install iterm2
+
+#+END_SRC
+
+** Theme
+
+** Status bar
+
+* Git
+
+** Setup gitconfig
+
+#+BEGIN_SRC sh
+
+ln -s ~/lib/dotfiles/git/gitconfig ~/.gitconfig
+
+#+END_SRC
+
+* Emacs
+
+** Install Emacs
+
+#+BEGIN_SRC sh
+
+brew cask install emacs
+
+#+END_SRC
+
+** Download local emacs packages
+
+#+BEGIN_SRC sh
+
+mkdir ~/.emacs.d/lisp
+cd ~/.emacs.d/lisp
+git clone https://github.com/Ladicle/hydra-posframe.git
+git clone https://github.com/nex3/perspective-el.git
+git clone https://github.com/ramnes/move-border.git
+
+#+END_SRC
+
+** Set up config files
+
+#+BEGIN_SRC sh
+
+ln -s ~/lib/dotfiles/emacs/init.el ~/.emacs.d/init.el
+ln -s ~/lib/dotfiles/emacs/config.org ~/.emacs.d/config.org
+ln -s ~/lib/dotfiles/emacs/persp-state ~/.emacs.d/persp-state
+
+#+END_SRC
+
+** Set up snippets
+
+#+BEGIN_SRC sh
+
+ln -s ~/lib/dotfiles/emacs/snippets ~/.emacs.d/
+
+#+END_SRC
+
+* Nerd Fonts
+
+You may need to restart your computer after this installation to get iTerm2 to see the fonts
+
+#+BEGIN_SRC sh
+
+git clone --depth 1 https://github.com/ryanoasis/nerd-fonts.git ~/lib/nerd-fonts
+cd ~/lib/nerd-fonts
+git checkout 2.0.0
+bash ./install.sh
+
+#+END_SRC
+
+* Color ls
+
+#+BEGIN_SRC sh
+
+gem install colorls
+
+#+END_SRC
+
+* NVM
+
+Keep in mind this won't work inside fish until you use fisher to install the nvm wrapper packages
+
+** Install NVM
+
+#+BEGIN_SRC sh
+
+git clone https://github.com/nvm-sh/nvm.git ~/.nvm
+cd ~/.nvm
+bash ~/lib/dotfiles/nvm/checkout-latest.sh
+bash ~/.nvm
+
+#+END_SRC
+
+** Set up node version
+
+#+BEGIN_SRC sh
+
+nvm install 11.15.0
+nvm use node
+
+#+END_SRC
+
+** Install global packages
+
+#+BEGIN_SRC sh
+
+npm i -g newman
+npm i -g npm-check
+npm i -g truffle
+npm i -g solhint
+npm i -g surya
+
+#+END_SRC
+
+#+RESULTS:
+
+* Fish
+
+** Install Fish
+
+#+BEGIN_SRC sh
+
+brew install fish
+
+#+END_SRC
+
+** Change default shell
+
+#+BEGIN_SRC sh
+
+echo /usr/local/bin/fish | sudo tee -a /etc/shells
+chsh -s /usr/local/bin/fish
+
+#+END_SRC
+
+** Setup config files
+
+#+BEGIN_SRC sh
+
+ln -s ~/lib/dotfiles/fish/config.fish ~/.config/fish/config.fish
+ln -s ~/lib/dotfiles/fish/fishfile ~/.config/fish/fishfile
+
+#+END_SRC
+
+** Set up fisher and install packages
+
+#+BEGIN_SRC sh
+
+curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
+cd ~/.config/fish
+fisher
+
+#+END_SRC
+
+* Ripgrep
+
+#+BEGIN_SRC sh
+
+brew install ripgrep
+
+#+END_SRC
+
+* psql
+
+#+BEGIN_SRC sh
+
+brew install postgresql
+
+#+END_SRC
