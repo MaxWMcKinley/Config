@@ -2,12 +2,12 @@
 # Environment Variables
 # -------
 
-set --export repos $HOME/home/repos
-set --export scripts $HOME/home/scripts
-
-set --export GOPATH $repos/go-workspace
-set --export FERDPATH $repos/ferd
+set --export proj $HOME/proj
+        
+set --export GOPATH $proj/go-workspace
+set --export FERDPATH $proj/ferd
 set --export AX_ENVIRONMENT local
+set --export nvm_prefix $HOME/.nvm
 
 set --export --prepend PATH $scripts $GOPATH/bin
 set --export PGPASSWORD axcore
@@ -17,14 +17,15 @@ set --export PGPASSWORD axcore
 # -------
 
 abbr --add --global abbr abbr --add --global
-abbr vpn 'sudo killall openvpn; sudo nohup openvpn --config $HOME/.max@axoni.com.ovpn &'
 abbr ls 'colorls --sort-dirs'
 abbr lsa 'colorls --long --sort-dirs --almost-all'
+abbr lst 'colorls --tree --gs --sort-dirs --almost-all'
 abbr vim 'nvim'
 abbr g 'git'
 abbr d 'docker'
+abbr dc 'docker-compose'
 abbr dps 'docker ps --format "table {{.Image}}\t{{.Names}}\t{{.Status}}"'
-abbr wifi 'nmtui'
+abbr npmls 'npm -g list --depth 0'
 
 # ------
 # Prompt
