@@ -52,7 +52,7 @@
       (setq projectile-completion-system 'ivy)
       (setq projectile-mode-line-prefix nil)
       (setq projectile-switch-project-action #'projectile-dired)
-      (setq projectile-project-search-path '("~/proj/" "~/scripts/" "~/org")))
+      (setq projectile-project-search-path '("~/proj/" "~/scripts/")))
     :config
     (progn
       (projectile-register-project-type 'solidity '("truffle-config.js")
@@ -253,10 +253,14 @@
 (set-default 'cursor-type 'bar)
 (fset 'yes-or-no-p 'y-or-n-p)
 
-(setq spacemacs-theme-comment-italic t)
-(setq spacemacs-theme-keyword-italic t)
-(setq spacemacs-theme-comment-bg nil)
-(load-theme `spacemacs-dark t)
+(use-package spacemacs-theme
+  :no-require t
+  :init
+  (setq spacemacs-theme-comment-italic t)
+  (setq spacemacs-theme-keyword-italic t)
+  (setq spacemacs-theme-comment-bg nil)
+  :config
+  (load-theme `spacemacs-dark t))
 
 #+END_SRC
 
@@ -296,22 +300,22 @@
 
 #+BEGIN_SRC emacs-lisp
 
-  (use-package solidity-mode
-    :init
-    (progn
-      (setq solidity-comment-style 'slash)
-      (setq solidity-solc-path "/usr/bin/solc")))
-  ;;   :hook (solidity-mode-hook . 
-  ;;     (lambda ()
-  ;;     (set (make-local-variable 'company-backends)
-  ;; 		(append '((company-solidity company-capf company-dabbrev-code))
-  ;; 			company-backends)))))
+  ;; (use-package solidity-mode
+  ;;   :init
+  ;;   (progn
+  ;;     (setq solidity-comment-style 'slash)
+  ;;     (setq solidity-solc-path "/usr/bin/solc")))
+  ;; ;;   :hook (solidity-mode-hook . 
+  ;; ;;     (lambda ()
+  ;; ;;     (set (make-local-variable 'company-backends)
+  ;; ;; 		(append '((company-solidity company-capf company-dabbrev-code))
+  ;; ;; 			company-backends)))))
 
-  (use-package solidity-flycheck
-    :init
-    (setq solidity-flycheck-solc-checker-active t))
+  ;; (use-package solidity-flycheck
+  ;;   :init
+  ;;   (setq solidity-flycheck-solc-checker-active t))
 
-  (use-package company-solidity)
+  ;; (use-package company-solidity)
 
 #+END_SRC
 
@@ -347,6 +351,8 @@
 #+BEGIN_SRC emacs-lisp
 
 (electric-pair-mode)
+
+(setq vc-follow-symlinks t)
 
 (setq-default indent-tabs-mode nil)
 (setq tab-width 4)
@@ -405,18 +411,19 @@ scratch buffer
 **** TODO Get rid of border and a 3d shadow like effect instead [[https://github.com/Ladicle/hydra-posframe][Example]]
 **** TODO Add some padding on the inside
 **** TODO Make the titles bold [[https://github.com/jerrypnz/major-mode-hydra.el][Example]]
+**** TODO Hydra posframe makes a minibuffer window on mac when used the first time
 
 #+BEGIN_SRC emacs-lisp
 
-(use-package posframe)
-(use-package hydra-posframe
-  :load-path "~/.emacs.d/lisp/hydra-posframe"
-  :hook (after-init . hydra-posframe-enable))
+  (use-package posframe)
+  ;; (use-package hydra-posframe
+  ;;   :load-path "~/.emacs.d/lisp/hydra-posframe"
+  ;;   :hook (after-init . hydra-posframe-enable))
 
 #+END_SRC
 
 *** Window hydra
-**** TODO Figure out why the last line of Resize is being ignored
+**** DONE Figure out why the last line of Resize is being ignored (resolved with move to mac)
 
 #+BEGIN_SRC emacs-lisp
 
@@ -440,9 +447,12 @@ scratch buffer
      ("j" move-border-left "←")
      ("l" move-border-right "→")
      ("i" move-border-up "↑")
-     ("k" move-border-down "↓")
-     ("!" nil "ignore"))))
+     ("k" move-border-down "↓"))))
 
+(with-eval-after-load 'magit-log
+  (define-key magit-status-mode-map (kbd "C-w") nil))
+(with-eval-after-load 'magit-log
+  (define-key magit-process-mode-map (kbd "C-w") nil))
 (define-key global-map (kbd "C-w") 'hydra-window/body)
 
 
@@ -471,7 +481,6 @@ scratch buffer
 
 #+BEGIN_SRC emacs-lisp
 
-  (setq org-agenda-files (list "~/org/inbox.org"))
   (define-key global-map (kbd "C-c l") 'org-store-link)
   (define-key global-map (kbd "C-c a") 'org-agenda)
 
@@ -491,9 +500,6 @@ scratch buffer
        (emacs-lisp . t)
        (shell . t)
       ))
-
-  (use-package org-edna)
-  (use-package org-super-agenda)
 
 #+END_SRC
 
