@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: debugEvent
+# key: emit
+# --
+debug${1:$$(yas/choose-value '("Bytes32" "Address" "Uint" "Int256" "Bool" "Bytes32Array"))}("$2", "`(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`", "$3", $4);
+$>$0
