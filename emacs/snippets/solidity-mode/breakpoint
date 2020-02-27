@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: breakpoint
+# key: b
+# --
+emit Msg("$1");
+$>$0
