@@ -202,6 +202,14 @@
 
 #+END_SRC
 
+** JSON Navigator
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package json-navigator)
+
+#+END_SRC
+
 ** Delight
 
 #+BEGIN_SRC emacs-lisp
@@ -368,6 +376,9 @@
 
 (setq initial-scratch-message nil)
 
+(define-key input-decode-map [?\C-i] [C-i])
+(define-key input-decode-map [?\C-m] [C-m])
+
 (defun toggle-frame-split ()
   "If the frame is split vertically, split it horizontally or vice versa.
 Assumes that the frame is only split into two."
@@ -427,36 +438,59 @@ scratch buffer
 
 #+BEGIN_SRC emacs-lisp
 
-(pretty-hydra-define hydra-window (:title "Window Shortcuts" :separator "━") 
-  ("Movement"
-    (("w" ace-window "Switch window" :color blue)
-     ("m" ace-swap-window "Move window" :color blue)
-     ("s" follow-mode "Stitch" :color blue))
-  "Layout"
-    (("d" persp-switch-quick "Perspective" :color blue)
-     ("n" persp-switch "New layout" :color blue)
-     ("|" split-window-right "Vertical" :color blue)
-     ("_" split-window-below "Horizontal" :color blue)
-     ("t" toggle-frame-split "Toggle split" :color blue))
-  "Close"
-    (("c" delete-window "Close" :color blue)
-     ("o" ace-delete-window "Close Other" :color blue))
-  "Resize"
-    (("f" ace-delete-other-windows "Fullscreen" :color blue)
-     ("b" balance-windows "Balance" :color blue)
-     ("j" move-border-left "←")
-     ("l" move-border-right "→")
-     ("i" move-border-up "↑")
-     ("k" move-border-down "↓"))))
+  (pretty-hydra-define hydra-window (:title "Window Shortcuts" :separator "━") 
+    ("Movement"
+      (("w" ace-window "Switch window" :color blue)
+       ("m" ace-swap-window "Move window" :color blue))
+    "Layout"
+      (("d" persp-switch-quick "Perspective" :color blue)
+       ("s" persp-switch "New layout" :color blue)
+       ("|" split-window-right "Vertical" :color blue)
+       ("_" split-window-below "Horizontal" :color blue)
+       ("t" toggle-frame-split "Toggle split" :color blue)
+       ("n" make-frame "New frame" :color blue))
+    "Close"
+      (("c" delete-window "Close" :color blue)
+       ("o" ace-delete-window "Close Other" :color blue))
+    "Resize"
+      (("f" ace-delete-other-windows "Fullscreen" :color blue)
+       ("b" balance-windows "Balance" :color blue)
+       ("j" move-border-left "←")
+       ("l" move-border-right "→")
+       ("i" move-border-up "↑")
+       ("k" move-border-down "↓"))))
 
-(with-eval-after-load 'magit-log
-  (define-key magit-status-mode-map (kbd "C-w") nil))
-(with-eval-after-load 'magit-log
-  (define-key magit-process-mode-map (kbd "C-w") nil))
-(define-key global-map (kbd "C-w") 'hydra-window/body)
-
+  ;; These lines make it impossible to start magit initially
+  (with-eval-after-load 'magit-log
+    (define-key magit-status-mode-map (kbd "C-w") nil))
+  (with-eval-after-load 'magit-log
+    (define-key magit-process-mode-map (kbd "C-w") nil))
+  (define-key global-map (kbd "C-w") 'hydra-window/body)
 
 #+END_SRC
+
+*** Macro hydra
+
+#+BEGIN_SRC emacs-lisp
+
+(pretty-hydra-define hydra-macro (:title "Macro Shortcuts" :separator "━") 
+  ("Define"
+    (("s" kmacro-start-macro "Start Macro Definition" :color blue)
+     ("e" kmacro-end-macro "Stop Macro Definition" :color blue)
+     ("q" kbd-macro-query "Add macro query" :color blue)
+     ("n" name-last-kbd-macro "Name last macro" :color blue))
+  "Execute"
+    (("m" kmacro-end-and-call-macro "Call last macro" :color blue)
+     ("r" apply-macro-to-region-lines "Call last macro on each line in region" :color blue))
+   "Edit"
+     (("w" kmacro-edit-macro "Edit last macro" :color blue)
+      ("j" edit-kbd-macro "Edit named macro" :color blue)
+      ("i" inserst-kbd-macro "Insert last macro" :color blue))))
+
+(define-key global-map (kbd "<C-m>") 'hydra-macro/body)
+
+#+END_SRC
+
 
 *** File switching hydra
 **** TODO Create named eyebrowse layouts
@@ -473,7 +507,6 @@ scratch buffer
     (("c" eyebrowse-mode "Code" :color blue))))
 
 (define-key global-map (kbd "C-j") 'hydra-file/body)
-
 
 #+END_SRC
 

@@ -36,7 +36,7 @@
  '(org-agenda-files nil)
  '(package-selected-packages
    (quote
-    (perspective perpective gnu-elpa-keyring-update posframe pretty-hydra dockerfile-mode deadgrep scala-mode org-super-agenda org-edna eyebrowse solidity-mode htmlize ob-sh org org-babel-eval-in-repl treemacs-magit treemacs-projectile treemacs markdown-mode doom-themes multiple-cursors projectile smooth-scrolling swiper delight ace-window yasnippet spacemacs-theme org-bullets which-key swiper-helm switch-window use-package undo-tree string-inflection solidity-flycheck powerline magit js2-mode ivy gitlab-ci-mode flycheck-yamllint docker company-solidity))))
+    (json-navigator perspective perpective gnu-elpa-keyring-update posframe pretty-hydra dockerfile-mode deadgrep scala-mode org-super-agenda org-edna eyebrowse solidity-mode htmlize ob-sh org org-babel-eval-in-repl treemacs-magit treemacs-projectile treemacs markdown-mode doom-themes multiple-cursors projectile smooth-scrolling swiper delight ace-window yasnippet spacemacs-theme org-bullets which-key swiper-helm switch-window use-package undo-tree string-inflection solidity-flycheck powerline magit js2-mode ivy gitlab-ci-mode flycheck-yamllint docker company-solidity))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
