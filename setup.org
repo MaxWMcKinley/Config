@@ -221,3 +221,11 @@ brew install ripgrep
 brew install postgresql
 
 #+END_SRC
+
+* Terminal Tools
+
+#+BEGIN_SRC sh
+
+npm i -g tldr
+
+#+END_SRC
