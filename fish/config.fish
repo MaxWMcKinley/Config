@@ -3,6 +3,7 @@
 # -------
 
 set --export proj $HOME/proj
+set --export scripts $HOME/scripts
         
 set --export GOPATH $proj/go-workspace
 set --export FERDPATH $proj/ferd
