@@ -1,12 +1,9 @@
 # This is Git's per-user configuration file.
 [user]
 	name = Max McKinley
-	email = max@axoni.com
-[url "git@git.axoni.com:"]
-	insteadOf = https://git.axoni.com/
+	email = max.mck@hey.com
 [merge]
     ff = only
-
 [alias]
 	co = checkout
 	cm = commit -m
