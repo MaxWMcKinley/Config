@@ -4,14 +4,8 @@
 
 set --export proj $HOME/proj
 set --export scripts $HOME/scripts
-        
-set --export GOPATH $proj/go-workspace
-set --export FERDPATH $proj/ferd
-set --export AX_ENVIRONMENT local
 set --export nvm_prefix $HOME/.nvm
-
-set --export --prepend PATH $scripts $GOPATH/bin
-set --export PGPASSWORD axcore
+set --export --prepend PATH $scripts $HOME/.gem/bin
 
 # -------
 # Abbreviations
@@ -27,7 +21,7 @@ abbr d 'docker'
 abbr dc 'docker-compose'
 abbr dps 'docker ps --format "table {{.Image}}\t{{.Names}}\t{{.Status}}"'
 abbr npmls 'npm -g list --depth 0'
-
+abbr r 'source ~/.config/fish/config.fish'
 # ------
 # Prompt
 # ------
